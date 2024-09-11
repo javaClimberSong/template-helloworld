@@ -3,7 +3,7 @@ import {
   interpolate,
   spring,
   useCurrentFrame,
-  useVideoConfig,
+  useVideoConfig
 } from "remotion";
 import { Arc } from "./Arc";
 import { Atom } from "./Atom";
@@ -12,12 +12,12 @@ import { zColor } from "@remotion/zod-types";
 
 export const myCompSchema2 = z.object({
   logoColor1: zColor(),
-  logoColor2: zColor(),
+  logoColor2: zColor()
 });
 
 export const Logo: React.FC<z.infer<typeof myCompSchema2>> = ({
   logoColor1: color1,
-  logoColor2: color2,
+  logoColor2: color2
 }) => {
   const videoConfig = useVideoConfig();
   const frame = useCurrentFrame();
@@ -25,39 +25,39 @@ export const Logo: React.FC<z.infer<typeof myCompSchema2>> = ({
   const development = spring({
     config: {
       damping: 100,
-      mass: 0.5,
+      mass: 0.5
     },
     fps: videoConfig.fps,
-    frame,
+    frame
   });
 
   const rotationDevelopment = spring({
     config: {
       damping: 100,
-      mass: 0.5,
+      mass: 0.5
     },
     fps: videoConfig.fps,
-    frame,
+    frame
   });
 
   const scale = spring({
     frame,
     config: {
-      mass: 0.5,
+      mass: 0.5
     },
-    fps: videoConfig.fps,
+    fps: videoConfig.fps
   });
 
   const logoRotation = interpolate(
     frame,
     [0, videoConfig.durationInFrames],
-    [0, 360],
+    [0, 360]
   );
 
   return (
     <AbsoluteFill
       style={{
-        transform: `scale(${scale}) rotate(${logoRotation}deg)`,
+        transform: `scale(${scale}) rotate(${logoRotation}deg)`
       }}
     >
       <Arc

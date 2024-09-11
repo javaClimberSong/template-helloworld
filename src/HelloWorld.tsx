@@ -4,7 +4,7 @@ import {
   interpolate,
   Sequence,
   useCurrentFrame,
-  useVideoConfig,
+  useVideoConfig
 } from "remotion";
 import { Logo } from "./HelloWorld/Logo";
 import { Subtitle } from "./HelloWorld/Subtitle";
@@ -16,14 +16,14 @@ export const myCompSchema = z.object({
   titleText: z.string(),
   titleColor: zColor(),
   logoColor1: zColor(),
-  logoColor2: zColor(),
+  logoColor2: zColor()
 });
 
 export const HelloWorld: React.FC<z.infer<typeof myCompSchema>> = ({
   titleText: propOne,
   titleColor: propTwo,
   logoColor1,
-  logoColor2,
+  logoColor2
 }) => {
   const frame = useCurrentFrame();
   const { durationInFrames, fps } = useVideoConfig();
@@ -33,26 +33,26 @@ export const HelloWorld: React.FC<z.infer<typeof myCompSchema>> = ({
     frame: frame - 25,
     fps,
     config: {
-      damping: 100,
-    },
+      damping: 100
+    }
   });
 
   // Move the logo up by 150 pixels once the transition starts
   const logoTranslation = interpolate(
     logoTranslationProgress,
     [0, 1],
-    [0, -150],
+    [0, -150]
   );
 
   // Fade out the animation at the end
   const opacity = interpolate(
     frame,
-    [durationInFrames - 25, durationInFrames - 15],
+    [durationInFrames - 125, durationInFrames - 15],
     [1, 0],
     {
       extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-    },
+      extrapolateRight: "clamp"
+    }
   );
 
   // A <AbsoluteFill> is just a absolutely positioned <div>!
