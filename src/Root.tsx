@@ -5,56 +5,130 @@ import { Logo, myCompSchema2 } from "./HelloWorld/Logo";
 
 export const RemotionRoot: React.FC = () => {
   const root = {
-    duration: 14,
+    duration: 10,
     width: 1920,
     height: 1080,
     fps: 30,
     id: "CarVideo",
+    useage: {
+      slot_config: {
+        text1: { type: "text", index: 1 },
+        text1_2: { type: "text", index: 2 },
+        text2: { type: "text", index: 3 },
+        text2_2: { type: "text", index: 4 },
+        video1: { type: "video", index: 5 },
+        text3: { type: "text", index: 6 },
+        text3_2: { type: "text", index: 7 },
+        video2: { type: "video", index: 8 },
+        text4: { type: "text", index: 9 },
+        text4_2: { type: "text", index: 10 },
+        video3: { type: "video", index: 11 }
+      }
+    },
     elements: [
       {
-        time: 1,
-        duration: 2,
-        labelDuration: 2,
-        type: "composition",
-        zhLabel: "人类对汽车有什么期望",
-        enLabel: "WHAT WE CAN BRING TO PEOPLE",
-        cover_video_url: ""
+        elements: [
+          {
+            slot: "text1",
+            time: 0,
+            duration: 2,
+            offsetY: "30px",
+            type: "text",
+            value: "人类对汽车有什么期望"
+          },
+          {
+            slot: "text1_2",
+            time: 0,
+            duration: 2,
+            offsetY: "-30px",
+            type: "text",
+            value: "WHAT WE CAN BRING TO PEOPLE"
+          }
+        ]
       },
       {
-        time: 3,
-        duration: 2,
-        type: "composition",
-        zhLabel: "运动",
-        enLabel: "SPORTS",
-        cover_video_url:
-          "https://byering-web-assets.oss-cn-hangzhou.aliyuncs.com/newDhf/assets/car1.mp4"
+        elements: [
+          {
+            slot: "video1",
+            time: 2,
+            duration: 2,
+            type: "video",
+            value:
+              "https://byering-web-assets.oss-cn-hangzhou.aliyuncs.com/newDhf/assets/car1.mp4"
+          },
+          {
+            slot: "text2",
+            time: 2,
+            duration: 2,
+            type: "text",
+            offsetY: "30px",
+            value: "运动"
+          },
+          {
+            slot: "text2_2",
+            time: 2,
+            duration: 2,
+            offsetY: "-30px",
+            type: "text",
+            value: "SPORTS"
+          }
+        ]
       },
       {
-        time: 5,
-        duration: 3,
-        type: "composition",
-        zhLabel: "时尚",
-        enLabel: "FASHION",
-        cover_video_url:
-          "https://byering-web-assets.oss-cn-hangzhou.aliyuncs.com/newDhf/assets/car2.mp4"
+        elements: [
+          {
+            slot: "video2",
+            time: 4,
+            duration: 3,
+            type: "video",
+            value:
+              "https://byering-web-assets.oss-cn-hangzhou.aliyuncs.com/newDhf/assets/car2.mp4"
+          },
+          {
+            slot: "text3",
+            time: 4,
+            duration: 3,
+            type: "text",
+            offsetY: "30px",
+            value: "时尚"
+          },
+          {
+            slot: "text3_2",
+            time: 4,
+            offsetY: "-30px",
+            duration: 3,
+            type: "text",
+            value: "FASHION"
+          }
+        ]
       },
       {
-        time: 8,
-        duration: 3,
-        type: "composition",
-        zhLabel: "自由",
-        enLabel: "FREE",
-        cover_video_url:
-          "https://byering-web-assets.oss-cn-hangzhou.aliyuncs.com/newDhf/assets/car3.mp4"
-      },
-      {
-        time: 11,
-        duration: 3,
-        labelDuration: 3,
-        type: "composition",
-        zhLabel: "开阔人生  无畏前行",
-        enLabel: "奥迪 RS7",
-        cover_video_url: ""
+        elements: [
+          {
+            slot: "video3",
+            time: 7,
+            duration: 3,
+            type: "video",
+            value:
+              "https://byering-web-assets.oss-cn-hangzhou.aliyuncs.com/newDhf/assets/car3.mp4"
+          },
+          {
+            slot: "text4",
+            time: 7,
+            offsetY: "30px",
+            duration: 3,
+            type: "text",
+            value: "自由"
+          },
+          {
+            slot: "text4_2",
+            time: 7,
+            offsetY: "-30px",
+            duration: 3,
+            type: "text",
+            value: "FREE"
+          }
+        ]
       }
     ]
   };

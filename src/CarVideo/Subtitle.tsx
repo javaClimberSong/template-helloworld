@@ -4,8 +4,8 @@ import { FONT_FAMILY } from "./constants";
 import { z } from "zod";
 
 export const mySubtitle = z.object({
-  zhLabel: z.string(),
-  enLabel: z.string()
+  label: z.string(),
+  offsetY: z.string()
 });
 
 const subtitle: React.CSSProperties = {
@@ -21,8 +21,8 @@ const subtitle: React.CSSProperties = {
 };
 
 export const Subtitle: React.FC<z.infer<typeof mySubtitle>> = ({
-  zhLabel,
-  enLabel
+  label,
+  offsetY
 }) => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
@@ -31,10 +31,10 @@ export const Subtitle: React.FC<z.infer<typeof mySubtitle>> = ({
     [0, 20, durationInFrames - 20, durationInFrames],
     [0, 1, 1, 0]
   );
+  console.log(offsetY);
   return (
     <div style={{ ...subtitle, opacity }}>
-      <div>{enLabel}</div>
-      <div>{zhLabel}</div>
+      <div style={{ transform: "translateY(" + offsetY + ")" }}>{label}</div>
     </div>
   );
 };
