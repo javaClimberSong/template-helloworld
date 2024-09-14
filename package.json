@@ -13,6 +13,7 @@
   "dependencies": {
     "@remotion/cli": "^4.0.93",
     "@remotion/zod-types": "^4.0.93",
+    "express": "^4.21.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "remotion": "^4.0.93",
@@ -25,5 +26,8 @@
     "eslint": "^8.43.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5"
-  }
+  },
+  "main": "index.js",
+  "keywords": [],
+  "author": ""
 }
