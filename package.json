@@ -13,7 +13,9 @@
   "dependencies": {
     "@remotion/cli": "^4.0.93",
     "@remotion/zod-types": "^4.0.93",
+    "ali-oss": "^6.21.0",
     "express": "^4.21.0",
+    "form-data": "^4.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "remotion": "^4.0.93",
