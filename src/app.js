@@ -42,24 +42,23 @@ app.get("/render", (req, res) => {
 
 // 定义POSt接口，用于执行本地脚本
 app.post("/render", (req, res) => {
-  console.log("收到请求", req.body);
+  // console.log("收到请求", req.body);
   const { requestId,templateCode, props, videoName } = req.body;
+  console.log(`开始处理请求,requestId: ${requestId}, templateCodee: ${templateCode}, videoName: ${videoName}`);
   exec(
     `npx remotion render ${templateCode} out/${videoName}.mp4 --props '${JSON.stringify(props)}'`,
     (error, stdout, stderr) => {
       if (error) {
         console.error(`执行错误: ${error}`);
         return res.status(500).send({requestId:requestId, code:500, errorMsg:`${error.message}`});
-        // return res.status(500).send(`Error: ${error.message}`);
       }
 
       if (stderr) {
         console.error(`脚本标准错误输出: ${stderr}`);
         return res.status(500).send({requestId:requestId, code:500, errorMsg:`${stderr}`});
-        // return res.status(500).send(`Script Error: ${stderr}`);
       }
 
-      console.log("视频渲染成功,正在上传到:", config.url + uploadVideoName);
+      console.log("视频渲染成功,开始上传到oss");
 
       // 发送 POST 请求
       axios({
@@ -84,7 +83,7 @@ app.post("/render", (req, res) => {
           })
             .then(() => {
               res.send({requestId:requestId,code:200,url:config.url + uploadVideoName});
-              console.log("文件上传成功");
+              console.log("文件上传成功:", config.url + uploadVideoName);
             })
             .catch((err) => {
               res.send({requestId:requestId,code:500,errorMsg:err.errorMsg});
