@@ -97,7 +97,6 @@ app.post("/render", (req, res) => {
               console.log("视频上传失败", err);
             });
         }
-        console.log("文件key", res.data);
       });
     }
   );
