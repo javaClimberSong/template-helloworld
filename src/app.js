@@ -44,6 +44,7 @@ app.get("/render", (req, res) => {
 app.post("/render", (req, res) => {
   // console.log("收到请求", req.body);
   const { requestId,templateCode, props, videoName } = req.body;
+  const renderStart = new Date();
   console.log(`开始处理请求,requestId: ${requestId}, templateCodee: ${templateCode}, videoName: ${videoName}`);
   exec(
     `npx remotion render ${templateCode} out/${videoName}.mp4 --props '${JSON.stringify(props)}'`,
@@ -58,7 +59,9 @@ app.post("/render", (req, res) => {
         return res.status(500).send({requestId:requestId, code:500, errorMsg:`${stderr}`});
       }
 
-      console.log("视频渲染成功,开始上传到oss");
+      const renderEnd = new Date();
+      const renderDuration = renderEnd - renderStart;
+      console.log(`视频渲染成功, 耗时: ${renderDuration}ms`);
 
       // 发送 POST 请求
       axios({
@@ -82,12 +85,16 @@ app.post("/render", (req, res) => {
             data: formData
           })
             .then(() => {
+              const uploadEnd = new Date();
+              const uploadDuration = uploadEnd - renderEnd;
+              console.log(`视频上传成功, 耗时: ${uploadDuration}ms`, config.url + uploadVideoName);
+
               res.send({requestId:requestId,code:200,url:config.url + uploadVideoName});
-              console.log("文件上传成功:", config.url + uploadVideoName);
+              console.log("视频地址:", config.url + uploadVideoName);
             })
             .catch((err) => {
               res.send({requestId:requestId,code:500,errorMsg:err.errorMsg});
-              console.log("文件上传失败", err);
+              console.log("视频上传失败", err);
             });
         }
         console.log("文件key", res.data);
