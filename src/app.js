@@ -17,12 +17,12 @@ app.use((req, res, next) => {
 });
 
 // 定义接口，用于执行本地脚本
-app.get("/downLoad", (req, res) => {
+app.get("/render", (req, res) => {
   console.log("收到请求", req.query);
   res.send(`get请求弃用:`);
 
   // exec(
-  //   `npx remotion render ${model} out/${videoName}.mp4 --props ${JSON.stringify(props)}`,
+  //   `npx remotion render ${templateCode} out/${videoName}.mp4 --props ${JSON.stringify(props)}`,
   //   (error, stdout, stderr) => {
   //     if (error) {
   //       console.error(`执行错误: ${error}`);
@@ -41,21 +41,25 @@ app.get("/downLoad", (req, res) => {
 });
 
 // 定义POSt接口，用于执行本地脚本
-app.post("/downLoad", (req, res) => {
+app.post("/render", (req, res) => {
   console.log("收到请求", req.body);
-  const { model, props, videoName } = req.body;
+  const { requestId,templateCode, props, videoName } = req.body;
   exec(
-    `npx remotion render ${model} out/${videoName}.mp4 --props '${JSON.stringify(props)}'`,
+    `npx remotion render ${templateCode} out/${videoName}.mp4 --props '${JSON.stringify(props)}'`,
     (error, stdout, stderr) => {
       if (error) {
         console.error(`执行错误: ${error}`);
-        return res.status(500).send(`Error: ${error.message}`);
+        return res.status(500).send({requestId:requestId, code:500, errorMsg:`${error.message}`});
+        // return res.status(500).send(`Error: ${error.message}`);
       }
 
       if (stderr) {
         console.error(`脚本标准错误输出: ${stderr}`);
-        return res.status(500).send(`Script Error: ${stderr}`);
+        return res.status(500).send({requestId:requestId, code:500, errorMsg:`${stderr}`});
+        // return res.status(500).send(`Script Error: ${stderr}`);
       }
+
+      console.log("视频渲染成功,正在上传到:", config.url + uploadVideoName);
 
       // 发送 POST 请求
       axios({
@@ -63,7 +67,7 @@ app.post("/downLoad", (req, res) => {
         method: "get"
       }).then((results) => {
         const { entity: config } = results.data;
-        console.log("config", config);
+        // console.log("config", config);
         const uploadVideoName = videoName + ".mp4";
         if (config) {
           const data = fs.createReadStream("./out/" + uploadVideoName);
@@ -79,11 +83,11 @@ app.post("/downLoad", (req, res) => {
             data: formData
           })
             .then(() => {
-              res.send("文件已上传成功，url:" + config.url + uploadVideoName);
-              console.log("文件已上传url", config.url + uploadVideoName);
+              res.send({requestId:requestId,code:200,url:config.url + uploadVideoName});
+              console.log("文件上传成功");
             })
             .catch((err) => {
-              res.send("文件上传失败");
+              res.send({requestId:requestId,code:500,errorMsg:err.errorMsg});
               console.log("文件上传失败", err);
             });
         }
