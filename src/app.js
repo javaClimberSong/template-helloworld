@@ -48,7 +48,7 @@ app.post("/render", (req, res) => {
   console.log(`开始处理请求,requestId: ${requestId}, templateCodee: ${templateCode}, videoName: ${videoName}`);
   exec(
     totalDurationInFrames = props.totalDuration * props.fps,
-    `npx remotion render ${templateCode} out/${videoName}.mp4 --props '${JSON.stringify(props)}' --durationInFrames '${totalDurationInFrames}' --width '${props.width}' --height '${props.height}'`,
+    `npx remotion render ${templateCode} out/${videoName}.mp4 --props '${JSON.stringify(props)}'`,
 
     (error, stdout, stderr) => {
       if (error) {
