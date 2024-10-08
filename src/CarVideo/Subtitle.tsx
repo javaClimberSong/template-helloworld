@@ -28,7 +28,7 @@ export const Subtitle: React.FC<z.infer<typeof mySubtitle>> = ({
   const { durationInFrames } = useVideoConfig();
   const opacity = interpolate(
     frame,
-    [0, 20, durationInFrames - 20, durationInFrames],
+    [0, 10, durationInFrames - 10, durationInFrames],
     [0, 1, 1, 0]
   );
   console.log(offsetY);
