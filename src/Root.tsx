@@ -167,12 +167,12 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
       <Composition
-        fps={root.fps}
-        id={root.id}
+        id="CarVideo"
+        component={CarVideo}
+        fps={30}
+        durationInFrames={root.fps * root.duration}
         width={root.width}
         height={root.height}
-        durationInFrames={root.fps * root.duration}
-        component={CarVideo}
         schema={myCompCarVideo}
         defaultProps={{ ...root }}
       />
